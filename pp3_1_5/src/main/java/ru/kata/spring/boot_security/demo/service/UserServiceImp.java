@@ -75,11 +75,16 @@ public class UserServiceImp implements UserService, UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException(String.format("User '%s' not found", username));
         }
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
-                mapRolesToAuthorities(user.getRoles()));
+        return user;
     }
 
     private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
         return roles.stream().map(r -> new SimpleGrantedAuthority(r.getName())).collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean isUsernameExists(String username) {
+        User existingUser = userRepository.findByUsername(username);
+        return existingUser != null;
     }
 }

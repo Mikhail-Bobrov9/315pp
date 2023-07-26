@@ -19,4 +19,5 @@ public interface UserService extends UserDetailsService {
 
     void update(User user);
 
+    boolean isUsernameExists(String username);
 }

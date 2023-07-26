@@ -3,16 +3,19 @@ package ru.kata.spring.boot_security.demo.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.service.UserService;
+
 
 import java.security.Principal;
 import java.util.List;
 
 @RestController
 @RequestMapping("/restAdmin")
-public class RestAdminController {
+public class
+RestAdminController {
 
     private final UserService userService;
 
@@ -33,15 +36,26 @@ public class RestAdminController {
 
     @PutMapping()
     public ResponseEntity<User> restAddUser(@RequestBody User user) {
-        userService.save(user);
+        String username = user.getUsername();
+        if (!userService.isUsernameExists(username)) {
+            userService.save(user);
+        }
         return ResponseEntity.ok(user);
+
     }
 
     @PatchMapping()
     public ResponseEntity<User> restUpdateUser(@RequestBody User user) {
-        userService.update(user);
+        String username = user.getUsername();
+        User existingUser = userService.findByUsername(username);
+        if (existingUser == null || existingUser.getId().equals(user.getId())) {
+            userService.update(user);
+
+        }
         return ResponseEntity.ok(user);
+
     }
+
 
     @DeleteMapping()
     public ResponseEntity<User> restDelete(@RequestBody User user, Principal principal) {
