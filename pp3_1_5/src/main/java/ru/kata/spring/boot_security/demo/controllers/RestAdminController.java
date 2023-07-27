@@ -39,8 +39,9 @@ RestAdminController {
         String username = user.getUsername();
         if (!userService.isUsernameExists(username)) {
             userService.save(user);
+            return ResponseEntity.ok(user);
         }
-        return ResponseEntity.ok(user);
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
     }
 
@@ -50,9 +51,10 @@ RestAdminController {
         User existingUser = userService.findByUsername(username);
         if (existingUser == null || existingUser.getId().equals(user.getId())) {
             userService.update(user);
+            return ResponseEntity.ok(user);
 
         }
-        return ResponseEntity.ok(user);
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
     }
 

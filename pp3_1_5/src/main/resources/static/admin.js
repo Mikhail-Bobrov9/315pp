@@ -178,8 +178,7 @@ async function addUser() {
     })
 }
 function clearAndHideAddForm() {
-    document.getElementById("addFirstName").value = "";
-    document.getElementById("addLastName").value = "";
+    document.getElementById("addUserName").value = "";
     document.getElementById("addEmail").value = "";
     document.getElementById("addPassword").value = "";
     document.getElementById("addRoles").value = "option1";
