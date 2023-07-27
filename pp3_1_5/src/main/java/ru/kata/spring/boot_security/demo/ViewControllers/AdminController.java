@@ -31,29 +31,8 @@ public class AdminController {
         model.addAttribute("users", users);
         User user = userService.findByUsername(principal.getName());
         model.addAttribute("authUser", user);
-
         model.addAttribute("newUser", new User());
         return "admin";
     }
 
-
-    @PutMapping()
-    public String saveUser(@ModelAttribute("newUser") User user) {
-        userService.save(user);
-        return "redirect:/admin";
-    }
-
-//    @PatchMapping()
-//    public String updateUser(@ModelAttribute("user") User user) {
-//        userService.update(user);
-//        return "redirect:/admin";
-//    }
-//
-//    @DeleteMapping()
-//    public String delete(@ModelAttribute("user") User user,Principal principal) {
-//         if (!(principal.getName().equals(user.getUsername()))){
-//            userService.deleteUser(user.getId());
-//         }
-//        return "redirect:/admin";
-//    }
 }
